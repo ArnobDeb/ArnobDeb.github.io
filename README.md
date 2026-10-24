@@ -82,7 +82,7 @@ Before the first push, review `git ls-files` together — nothing personal may b
 
 ### IITB CSE server
 ```bash
-npm run deploy:cse                      # defaults to 25m0779@mars.cse.iitb.ac.in, ~/public_html
+npm run deploy:cse                      # defaults to arnobdeb@mars.cse.iitb.ac.in, ~/public_html
 npm run deploy:cse -- user@host dir     # anything else
 ```
 The script builds, lists what's on the server, asks before touching it, backs up `~/public_html` to

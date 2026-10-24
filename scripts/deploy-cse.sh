@@ -3,7 +3,7 @@
 # You type your password when ssh asks; nothing is stored. One connection is reused, so it asks once.
 # Usage: npm run deploy:cse [-- user@host [web-dir]]
 set -euo pipefail
-HOST="${1:-25m0779@mars.cse.iitb.ac.in}"
+HOST="${1:-arnobdeb@mars.cse.iitb.ac.in}"
 DIR="${2:-public_html}"
 cd "$(dirname "$0")/.."
 
@@ -15,7 +15,13 @@ STAMP=$(date +%Y%m%d-%H%M%S)
 
 echo
 echo "== Current ~/$DIR on $HOST =="
-$SSH "$HOST" "ls -la ~/$DIR 2>/dev/null || echo '(does not exist yet)'"
+$SSH "$HOST" "ls -la ~/$DIR 2>/dev/null || echo '(does not exist yet)'" || {
+  echo
+  echo "Could not log in to $HOST. Nothing was changed."
+  echo "Check that 'ssh $HOST' works from this machine first (network/VPN, port, or a jump host)."
+  echo "Any Host/Port/ProxyJump settings in ~/.ssh/config are used by this script automatically."
+  exit 1
+}
 echo
 read -r -p "Back this up to ~/${DIR}_backup_$STAMP and replace it with the new site? [y/N] " ok
 [[ "$ok" == [yY] ]] || { echo "Stopped. Nothing changed."; exit 1; }

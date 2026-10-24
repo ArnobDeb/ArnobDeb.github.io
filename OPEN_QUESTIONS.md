@@ -7,7 +7,7 @@
 - C# and Java → **keep** (added to Languages).
 
 ## Answered (later)
-- CSE server: `25m0779@mars.cse.iitb.ac.in`, `~/public_html`, served at `cse.iitb.ac.in/~arnobdeb/` (`npm run deploy:cse`).
+- CSE server: `arnobdeb@mars.cse.iitb.ac.in`, `~/public_html`, served at `cse.iitb.ac.in/~arnobdeb/` (`npm run deploy:cse`).
 - Siege: Ubisoft ID GamerBoy_21041. Anime: current favourite Kimetsu no Yaiba. Star Wars fan, Epic Games ID LordVader_19 (Battlefront).
 - Removed on request: Algo GC / Crossy GC tiles, the quote's attribution line, the footer credit line, the "smaller works" stones.
 - Timeline: education and milestones only (schooling from the old site at the roots); projects live on their own pages.
