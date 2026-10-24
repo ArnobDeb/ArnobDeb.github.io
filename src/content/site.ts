@@ -73,8 +73,8 @@ export const site = {
     timeline: [
       { realm: 'roots', when: '2017', title: 'Secondary School (Class X)', where: 'Darjeeling Public School, Fulbari · CBSE', rune: 'ᛇ', stat: '9.0' },
       { realm: 'roots', when: '2019', title: 'Higher Secondary (Class XII), PCM + CS', where: 'BSF Sr. Sec. Residential School, Kadamtala · CBSE', rune: 'ᛜ', stat: '85.8%' },
-      { realm: 'midgard', when: '2020', title: 'B.Tech, Computer Science & Engineering', where: 'Haldia Institute of Technology, Haldia (MAKAUT, West Bengal)', rune: 'ᛒ' },
-      { realm: 'midgard', when: '2024', title: 'Graduated with CPI 9.42', where: 'Haldia Institute of Technology', rune: 'ᛟ', stat: '9.42' },
+      { realm: 'midgard', when: '2020', title: 'B.Tech, Computer Science & Engineering', where: 'Haldia Institute of Technology, Haldia', rune: 'ᛒ' },
+      { realm: 'midgard', when: '2024', title: 'Graduated with CPI 9.42', where: 'Haldia Institute of Technology', rune: 'ᛟ' },
       { realm: 'midgard', when: '2025', title: 'GATE CS: All India Rank 103', where: 'Also qualified for the BARC OCES/DGFS-2025 selection interview', rune: 'ᛋ', stat: 'AIR 103' },
       { realm: 'midgard', when: '2025', title: 'First publication', where: 'Employability prediction with ML · RAICCIT 2025, JIS University (co-author)', rune: 'ᚨ' },
       { realm: 'asgard', when: 'Aug 2025', title: 'M.Tech CSE begins at IIT Bombay', where: 'Teaching Assistant for CS101', rune: 'ᛏ' },

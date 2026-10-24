@@ -71,10 +71,10 @@ function hero() {
 
 function about() {
   const a = site.about;
-  const realms: Record<string, { rune: string; name: string; note: string }> = {
-    asgard: { rune: 'ᚨ', name: 'Asgard', note: 'IIT Bombay' },
-    midgard: { rune: 'ᛗ', name: 'Midgard', note: 'Haldia & GATE' },
-    roots: { rune: 'ᛉ', name: 'The Roots', note: 'School' },
+  const realms: Record<string, { rune: string; name: string }> = {
+    asgard: { rune: 'ᚨ', name: 'Asgard' },
+    midgard: { rune: 'ᛗ', name: 'Midgard' },
+    roots: { rune: 'ᛉ', name: 'The Roots' },
   };
   let realm = '';
   const nodes = [...a.timeline]
@@ -82,7 +82,7 @@ function about() {
     .map((e, i) => {
       const band =
         e.realm !== realm
-          ? `<li class="ygg__realm ygg__realm--${e.realm}" aria-hidden="true"><span><b class="rune">${realms[e.realm].rune}</b> ${esc(realms[e.realm].name)} <em>· ${esc(realms[e.realm].note)}</em></span></li>`
+          ? `<li class="ygg__realm ygg__realm--${e.realm}" aria-hidden="true"><span><b class="rune">${realms[e.realm].rune}</b> ${esc(realms[e.realm].name)}</span></li>`
           : '';
       realm = e.realm;
       return `${band}
