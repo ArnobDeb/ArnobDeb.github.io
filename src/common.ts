@@ -1,5 +1,5 @@
 // Shared by every page: fonts, styles, nav, reveals, mail links, raven progress,
-// rune-decode headings, lightning buttons and the easter eggs.
+// rune-decode headings, lightning buttons, Bifröst travel between sections and the easter eggs.
 import '@fontsource/cinzel/600.css';
 import '@fontsource/cinzel/700.css';
 import '@fontsource-variable/inter';
@@ -10,6 +10,7 @@ import './styles/base.css';
 import './styles/sections.css';
 import './styles/saga.css';
 
+import { initBifrost } from './fx/bifrost';
 import { initEasterEggs } from './fx/easterEggs';
 import { initLightning } from './fx/lightning';
 import { reducedMotion } from './fx/loop';
@@ -101,4 +102,5 @@ export function initCommon() {
   initRuneDecode();
   initLightning();
   initEasterEggs();
+  initBifrost();
 }

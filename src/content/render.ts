@@ -1,6 +1,6 @@
 // Pure string rendering of site.ts into HTML. Runs at build time (vite.config.ts),
 // so it must not touch the DOM.
-import { CARDS, EPISODE, FIELD, INSCRIPTION, LANTERN, PC, RADAR, ROUTE, TORC, TRAIL, YGG_CROWN, YGG_ROOTS } from './art.ts';
+import { CARDS, EPISODE, FIELD, INSCRIPTION, LANTERN, PC, RADAR, ROUTE, SABER, YGG_CROWN, YGG_ROOTS } from './art.ts';
 import { site, type Resume } from './site.ts';
 
 export const esc = (s: string) =>
@@ -71,21 +71,34 @@ function hero() {
 
 function about() {
   const a = site.about;
+  const realms: Record<string, { rune: string; name: string; note: string }> = {
+    asgard: { rune: 'ᚨ', name: 'Asgard', note: 'IIT Bombay' },
+    midgard: { rune: 'ᛗ', name: 'Midgard', note: 'Haldia & GATE' },
+    roots: { rune: 'ᛉ', name: 'The Roots', note: 'School' },
+  };
+  let realm = '';
   const nodes = [...a.timeline]
     .reverse()
-    .map(
-      (e, i) => `
+    .map((e, i) => {
+      const band =
+        e.realm !== realm
+          ? `<li class="ygg__realm ygg__realm--${e.realm}" aria-hidden="true"><span><b class="rune">${realms[e.realm].rune}</b> ${esc(realms[e.realm].name)} <em>· ${esc(realms[e.realm].note)}</em></span></li>`
+          : '';
+      realm = e.realm;
+      return `${band}
       <li class="ygg__node${i % 2 ? ' ygg__node--r' : ''}${e.stat === 'now' ? ' ygg__node--now' : ''}">
         <span class="ygg__knot" aria-hidden="true"><span class="rune">${e.rune}</span></span>
+        <span class="ygg__twig" aria-hidden="true"></span>
         <div class="ygg__card reveal">
           <time class="ygg__when">${esc(e.when)}</time>
           <h3 class="ygg__title">${esc(e.title)}</h3>
           <p class="ygg__where">${esc(e.where)}</p>
           ${e.stat && e.stat !== 'now' ? `<span class="ygg__stat" aria-hidden="true">${esc(e.stat)}</span>` : ''}
         </div>
-      </li>`,
-    )
+      </li>`;
+    })
     .join('');
+  const motes = Array.from({ length: 14 }, (_, i) => `<i style="--k:${i}"></i>`).join('');
   return `
   <section id="midgard" class="section" aria-labelledby="midgard-title">
     ${sectionHead('midgard', a.realm, a.label, runeOf('midgard'))}
@@ -106,9 +119,9 @@ function about() {
       <div class="about__text reveal">${a.paragraphs.map((p) => `<p>${esc(p)}</p>`).join('')}</div>
     </div>
     <div class="ygg">
-      <h3 class="ygg__heading reveal">Yggdrasil <span>· the path so far, newest at the crown</span></h3>
+      <h3 class="ygg__heading reveal">Yggdrasil <span>· from the roots to the crown</span></h3>
       ${YGG_CROWN}
-      <div class="ygg__trunk" aria-hidden="true"><span class="ygg__fill"></span></div>
+      <div class="ygg__trunk" aria-hidden="true"><span class="ygg__fill"></span><span class="ygg__sap"></span><span class="ygg__motes">${motes}</span></div>
       <ol class="ygg__list">${nodes}</ol>
       ${YGG_ROOTS}
     </div>
@@ -136,21 +149,6 @@ function forge() {
       </a>`,
     )
     .join('');
-  const stones = f.stones
-    .map(
-      (st, i) => `
-      <li class="flip reveal" style="--i:${i}" tabindex="0">
-        <div class="flip__inner">
-          <div class="flip__face flip__front">
-            <span class="flip__rune" aria-hidden="true">${st.rune}</span>
-            <span class="flip__v">${esc(st.v)}</span>
-            <span class="flip__l">${esc(st.l)}</span>
-          </div>
-          <div class="flip__face flip__back"><p>${esc(st.d)}</p></div>
-        </div>
-      </li>`,
-    )
-    .join('');
   return `
   <section id="forge" class="section section--forge" aria-labelledby="forge-title">
     ${sectionHead('forge', f.realm, f.label, runeOf('forge'), f.intro)}
@@ -158,9 +156,11 @@ function forge() {
       <canvas class="forge__embers" aria-hidden="true"></canvas>
       <div class="portals">${portals}</div>
     </div>
-    <h3 class="mini-title reveal">Smaller works from the anvil <span>· hover or tap a stone</span></h3>
-    <ul class="flips">${stones}</ul>
-    <a class="link-arrow reveal" href="${esc(f.github.href)}" target="_blank" rel="noopener">${esc(f.github.label)} ${externalIcon}<span class="sr-only">(opens in a new tab)</span></a>
+    <div class="anvil reveal">
+      <span class="anvil__rune" aria-hidden="true">ᚷ</span>
+      <p>${esc(f.github.text)}</p>
+      <a class="btn btn--ghost" href="${esc(f.github.href)}" target="_blank" rel="noopener">${esc(f.github.label)} ${externalIcon}<span class="sr-only">(opens in a new tab)</span></a>
+    </div>
   </section>`;
 }
 
@@ -211,10 +211,17 @@ function resumes() {
   </section>`;
 }
 
+// A gamer tag that copies itself to the clipboard (wired up in pages/home.ts).
+const gamerId = (id: { label: string; value: string }) => `
+          <button type="button" class="gamer-id" data-copy="${esc(id.value)}">
+            <span class="gamer-id__label">${esc(id.label)}</span>
+            <span class="gamer-id__v">${esc(id.value)}</span>
+            <span class="gamer-id__hint" aria-hidden="true">copy</span>
+          </button>`;
+
 function valhalla() {
   const v = site.valhalla;
   const s = v.siege;
-  const siegeDetails = [s.platform && `Platform: ${s.platform}`, s.handle && `Handle: ${s.handle}`].filter(Boolean) as string[];
   const term = v.terminal
     .map(
       (l) =>
@@ -231,12 +238,11 @@ function valhalla() {
           ${extra}
         </div>
       </article>`;
-  const [gc, crossy] = v.honours;
   return `
   <section id="valhalla" class="section" aria-labelledby="valhalla-title">
     ${sectionHead('valhalla', v.realm, v.label, runeOf('valhalla'), v.intro)}
     <div class="bento">
-      ${tile('tile--siege', RADAR, s.title, esc(s.text), 0, `<p class="tile__meta">${siegeDetails.length ? siegeDetails.map(esc).join(' · ') : esc(s.fallback)}</p>`)}
+      ${tile('tile--siege', RADAR, s.title, esc(s.text), 0, gamerId(s.id))}
       <article class="tile tile--pool reveal" style="--i:1">
         <div class="tile__art"><canvas class="pool" aria-label="Mini pool table: drag back from the white ball and release to shoot" role="img"></canvas></div>
         <div class="tile__text">
@@ -246,18 +252,16 @@ function valhalla() {
         </div>
       </article>
       ${tile('tile--lantern', LANTERN, v.comics.title, esc(v.comics.text), 2)}
-      ${tile('tile--anime', EPISODE, v.anime.title, esc(v.anime.text), 3, v.anime.favorites.length ? tags(v.anime.favorites) : '')}
+      ${tile('tile--anime', EPISODE, v.anime.title, esc(v.anime.text), 3, v.anime.favorites.length ? `<p class="tile__meta">${esc(v.anime.favLabel)}:</p>${tags(v.anime.favorites)}` : '')}
       ${tile('tile--pc', PC, v.pc.title, esc(v.pc.text), 4)}
       ${tile('tile--cards', `<button type="button" class="card-fan" aria-label="Draw a rune card">${CARDS}</button>`, v.cards.title, esc(v.cards.text), 5)}
       ${tile('tile--field', FIELD, v.field.title, esc(v.field.text), 6)}
       ${tile('tile--travel', ROUTE, v.travel.title, esc(v.travel.text), 7)}
-      ${tile('tile--honour', TORC + `<span class="torc__v">${esc(gc.v)}</span>`, gc.l, esc(gc.d), 8)}
-      ${tile('tile--honour tile--trail', TRAIL + `<span class="torc__v">${esc(crossy.v)}</span>`, crossy.l, esc(crossy.d), 9)}
+      ${tile('tile--saber', SABER, v.starwars.title, esc(v.starwars.text), 8, gamerId(v.starwars.id))}
     </div>
     <div class="hall__row">
       <figure class="quote reveal">
         <blockquote><p>“${esc(v.quote.text)}”</p></blockquote>
-        <figcaption>— ${esc(v.quote.who)}, <cite>${esc(v.quote.source)}</cite></figcaption>
       </figure>
       <div class="term reveal" role="group" aria-label="Terminal">
         <div class="term__bar" aria-hidden="true"><span></span><span></span><span></span><em>valhalla — zsh</em></div>
@@ -267,26 +271,48 @@ function valhalla() {
   </section>`;
 }
 
+const ICONS: Record<string, string> = {
+  mail: '<path d="M3 6.5A1.5 1.5 0 0 1 4.5 5h15A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5Z"/><path d="m3.5 6 8.5 7 8.5-7"/>',
+  code: '<path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16"/>',
+  people: '<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4.8a3.2 3.2 0 0 1 0 6.4M18 14.4c1.8.8 3 2.6 3 4.6"/>',
+};
+const icon = (k: string) =>
+  `<svg class="raven__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICONS[k]}</svg>`;
+const RAVEN = `<svg class="raven__bird" viewBox="0 0 48 32" aria-hidden="true"><path d="M2 20c6-1 10-4 14-8 3-3 7-6 12-6 3 0 5 1 6 3l6 1-5 3c0 5-3 9-9 11l4 6-6-3-4 2 1-4c-7 0-13-2-19-5Z" fill="currentColor"/></svg>`;
+
 function contact() {
   const c = site.contact;
-  const emails = c.emails
-    .map(
-      (e) =>
-        `<li><span class="contact__label">${esc(e.label)} email</span><a class="mail" href="#ravens" data-u="${esc(e.user)}" data-d="${esc(e.domain)}">${esc(e.user)}&#64;${esc(e.domain)}</a></li>`,
-    )
-    .join('');
-  const links = c.links
-    .map(
-      (l) =>
-        `<li><span class="contact__label">${esc(l.label)}</span><a href="${esc(l.href)}" target="_blank" rel="noopener me">${esc(l.handle)} ${externalIcon}<span class="sr-only">(${esc(l.label)}, opens in a new tab)</span></a></li>`,
-    )
-    .join('');
+  const card = (i: number, rune: string, kind: string, label: string, value: string, action: string, attrs: string, mail = false) => `
+      <li class="raven reveal" style="--i:${i}">
+        <a class="raven__link${mail ? ' mail' : ''}" ${attrs}>
+          ${RAVEN}
+          <span class="raven__seal" aria-hidden="true"><span class="rune">${rune}</span></span>
+          ${icon(kind)}
+          <span class="raven__label">${esc(label)}</span>
+          <span class="raven__value">${value}</span>
+          <span class="raven__action" aria-hidden="true">${esc(action)} <span>→</span></span>
+        </a>
+      </li>`;
+  const emails = c.emails.map((e, i) =>
+    card(i, i ? 'ᛗ' : 'ᛁ', 'mail', `${e.label} email`, `${esc(e.user)}<wbr>&#64;${esc(e.domain)}`, 'Write', `href="#ravens" data-u="${esc(e.user)}" data-d="${esc(e.domain)}"`, true),
+  );
+  const links = c.links.map((l, i) =>
+    card(
+      c.emails.length + i,
+      i ? 'ᛚ' : 'ᚷ',
+      l.label === 'GitHub' ? 'code' : 'people',
+      l.label,
+      esc(l.handle),
+      'Visit',
+      `href="${esc(l.href)}" target="_blank" rel="noopener me" aria-label="${esc(l.label)}: ${esc(l.handle)} (opens in a new tab)"`,
+    ),
+  );
   const primary = c.emails[0];
   return `
   <section id="ravens" class="section section--ravens" aria-labelledby="ravens-title">
     ${sectionHead('ravens', c.realm, c.label, runeOf('ravens'), c.intro)}
-    <div class="contact reveal">
-      <ul class="contact__list">${emails}${links}</ul>
+    <ul class="ravens-post">${[...emails, ...links].join('')}</ul>
+    <div class="ravens-post__cta reveal">
       <a class="btn btn--gold mail" href="#ravens" data-u="${esc(primary.user)}" data-d="${esc(primary.domain)}" data-lightning>Send a raven</a>
     </div>
   </section>`;
@@ -295,7 +321,6 @@ function contact() {
 export function footer(base = '') {
   return `
   <footer class="footer">
-    <p>Carved by hand by Arnob Deb · Norse runes are public domain; all art on this page is original.</p>
     <a href="${base}#bifrost" class="footer__top">${base ? 'Back to the Bifröst ↑' : 'Return to the Bifröst ↑'}</a>
   </footer>
   <div class="toast" role="status" aria-live="polite"></div>`;

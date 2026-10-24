@@ -17,7 +17,7 @@ Requires Node 20+ (tested with Node 24).
 ## Edit the words
 
 **Everything the home page says lives in [`src/content/site.ts`](src/content/site.ts)**: bio, the Yggdrasil timeline,
-the Forge portals and stones, skills, resumes, Valhalla tiles, quote, terminal lines, contact links.
+the Forge portals and GitHub hand-off, skills, resumes, Valhalla tiles (gamer IDs included), quote, terminal lines, contact links.
 **The three project pages ("sagas") live in [`src/content/sagas.ts`](src/content/sagas.ts)**: each one is a list of
 acts (scroll-driven steps beside an animated stage), chart blocks and runestone blocks. Edit and save; the dev server reloads.
 
@@ -26,10 +26,7 @@ Pages: `index.html` (home), `restorekv.html` (thesis), `gpu.html` (RowHammer + O
 The content is rendered into static HTML at build time (`src/content/render.ts`, wired up in `vite.config.ts`),
 so the page is fully readable without JavaScript and crawlable by search engines.
 
-Fill-in-later fields (hidden while empty):
-- `valhalla.siege.platform`, `valhalla.siege.handle`
-- `valhalla.anime.favorites` (list of titles)
-- `meta.siteUrl` — set to the final public address to emit `canonical`, `og:url` and an absolute `og:image`.
+`meta.siteUrl` is the public address (`https://www.cse.iitb.ac.in/~arnobdeb/`); it feeds `canonical`, `og:url` and the absolute `og:image`.
 
 ## Swap a resume
 
@@ -64,6 +61,7 @@ same stages, cycling through a few steps on their own.
 | `yggdrasil.ts` | Timeline trunk fills with light as you scroll; knots light up |
 | `pool.ts` | Playable pool table in Valhalla |
 | `story.ts` / `chartHover.ts` | Scroll-driven stages; chart tooltips and count-up stats |
+| `bifrost.ts` | Clicking a link to a section opens a rainbow beam that drags the page there and burns a rune ring where you land; between pages the beam departs and arrives |
 | `easterEggs.ts` | Konami code (↑↑↓↓←→←→BA) → thunder + Tony Stark quote; type `odin` → the All-father opens an eye |
 | `loop.ts` | Shared helpers: animation loops pause when off-screen or the tab is hidden |
 
@@ -82,11 +80,11 @@ and at `/~arnobdeb/` on the CSE server. **Nothing is deployed until Arnob says y
 
 Before the first push, review `git ls-files` together — nothing personal may be in the repo.
 
-### IITB CSE server (final)
-Needs the SSH hostname and web directory from Arnob/the department (don't guess). Then:
+### IITB CSE server
 ```bash
-ssh <user>@<host> 'cp -r ~/public_html ~/public_html_backup_$(date +%Y%m%d)'   # back up first
-npm run build
-rsync -avz --delete dist/ <user>@<host>:~/public_html/
+npm run deploy:cse                      # defaults to 25m0779@mars.cse.iitb.ac.in, ~/public_html
+npm run deploy:cse -- user@host dir     # anything else
 ```
-Arnob types the password; no credentials go in any file. A `deploy:cse` npm script gets added once host and path are confirmed.
+The script builds, lists what's on the server, asks before touching it, backs up `~/public_html` to
+`~/public_html_backup_<timestamp>`, then rsyncs `dist/` (with `--delete`) and sets world-readable permissions.
+Arnob types the password when ssh asks; no credentials go in any file. It prints the one-line undo at the end.

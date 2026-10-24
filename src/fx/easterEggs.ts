@@ -1,4 +1,4 @@
-// Konami code → thunder + the Tony Stark quote. Typing "odin" → the All-father opens an eye.
+// Konami code → thunder + the Valhalla quote. Typing "odin" → the All-father opens an eye.
 // Both are optional extras; nothing on the page depends on them.
 import { site } from '../content/site';
 import { reducedMotion } from './loop';
@@ -36,7 +36,7 @@ export function initEasterEggs() {
     if (keys.join() === KONAMI.join()) {
       keys = [];
       strike(document.querySelector('.hero__name') ?? document.body);
-      toast(`“${q.text}”<small>— ${q.who}, ${q.source}</small>`);
+      toast(`“${q.text}”`);
     }
 
     if (k.length === 1) {

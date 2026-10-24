@@ -84,12 +84,28 @@ export const ROUTE = `<svg class="route" viewBox="0 0 220 120" aria-hidden="true
   <g fill="#d9a441"><circle cx="8" cy="96" r="4"/><circle cx="88" cy="40" r="4"/><circle cx="168" cy="82" r="4"/><circle cx="214" cy="22" r="4"/></g>
 </svg>`;
 
-export const TORC = `<svg class="torc" viewBox="0 0 100 100" aria-hidden="true">
-  <circle cx="50" cy="50" r="40" fill="none" stroke="#c9d3df" stroke-width="6" stroke-dasharray="210 40" transform="rotate(110 50 50)"/>
-  <circle cx="22" cy="74" r="7" fill="#c9d3df"/><circle cx="78" cy="74" r="7" fill="#c9d3df"/>
-</svg>`;
-
-export const TRAIL = `<svg class="trail" viewBox="0 0 220 60" aria-hidden="true">
-  <path d="M6 44c30-30 50 10 80-10s50-24 70 0 40 10 58-20" fill="none" stroke="#2c3646" stroke-width="3" stroke-linecap="round"/>
-  <path class="trail__line" d="M6 44c30-30 50 10 80-10s50-24 70 0 40 10 58-20" fill="none" stroke="#3ee6c1" stroke-width="3" stroke-linecap="round" pathLength="100"/>
+// Star Wars tile: a laser sword that ignites when the tile appears; hyperspace streaks on hover.
+const STARS = [[18, 20], [52, 112], [96, 16], [150, 30], [196, 18], [204, 100], [30, 70], [176, 124], [120, 128], [70, 44]]
+  .map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="${i % 3 ? 1 : 1.6}"/>`)
+  .join('');
+const STREAKS = Array.from({ length: 9 }, (_, i) => {
+  const a = (i / 9) * Math.PI * 2 + 0.3;
+  const r1 = 18 + (i % 3) * 6;
+  const r2 = r1 + 50;
+  const p = (r: number) => `${(110 + Math.cos(a) * r).toFixed(1)} ${(70 + Math.sin(a) * r * 0.6).toFixed(1)}`;
+  return `<path d="M${p(r1)}L${p(r2)}"/>`;
+}).join('');
+export const SABER = `<svg class="saber" viewBox="0 0 220 140" aria-hidden="true">
+  <g class="saber__stars" fill="#c9d3df">${STARS}</g>
+  <g class="saber__streaks" stroke="#cfe6ff" stroke-width="1.2" stroke-linecap="round">${STREAKS}</g>
+  <g transform="rotate(-24 110 70)">
+    <line class="saber__glow" x1="96" y1="70" x2="206" y2="70" stroke="#ff2a3c" stroke-width="12" stroke-linecap="round"/>
+    <line class="saber__blade" x1="96" y1="70" x2="206" y2="70" stroke="#ffe3e6" stroke-width="3.4" stroke-linecap="round"/>
+    <rect x="34" y="63" width="62" height="14" rx="3" fill="#3a4250"/>
+    <rect x="44" y="63" width="22" height="14" fill="#1a1f27"/>
+    <path d="M47 63v14M51 63v14M55 63v14M59 63v14M63 63v14" stroke="#4d5767" stroke-width="1.2"/>
+    <rect x="86" y="61" width="11" height="18" rx="2" fill="#8a94a3"/>
+    <rect x="72" y="66" width="6" height="4" rx="1" fill="#ff2a3c"/>
+    <rect x="28" y="65" width="8" height="10" rx="2" fill="#8a94a3"/>
+  </g>
 </svg>`;

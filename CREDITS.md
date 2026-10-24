@@ -4,8 +4,9 @@ All artwork on the site is original: the star field, aurora, lightning, embers, 
 favicon and the Open Graph image (`public/og-image.png`, generated with a Python/Pillow script) were drawn in code
 for this site. Elder Futhark runes and Norse mythology are public domain.
 
-No God of War / Santa Monica Studio / Sony, Marvel, Ubisoft or DC assets, logos, likenesses or fonts are used.
-*Rainbow Six Siege*, *Green Lantern*, *The Avengers* and Marvel/DC are mentioned by name in text only.
+No God of War / Santa Monica Studio / Sony, Marvel, Ubisoft, Lucasfilm/Disney, EA, Epic or DC assets, logos, likenesses or fonts are used.
+*Rainbow Six Siege*, *Green Lantern*, *The Avengers*, Marvel/DC, *Star Wars*, *Battlefront* and *Kimetsu no Yaiba* are mentioned by name in text only;
+the laser-sword tile art is an original drawing.
 
 The quote "Doth mother know you weareth her drapes?" is a single attributed line from *The Avengers* (2012).
 

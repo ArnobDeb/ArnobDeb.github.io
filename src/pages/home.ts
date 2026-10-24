@@ -2,6 +2,7 @@
 import { $, initCommon } from '../common';
 import '../styles/home.css';
 import { initCountUp } from '../fx/chartHover';
+import { toast } from '../fx/easterEggs';
 import { initEmbers } from '../fx/embers';
 import { initLantern } from '../fx/lantern';
 import { reducedMotion } from '../fx/loop';
@@ -33,7 +34,7 @@ if (ygg) initYggdrasil(ygg);
 const pool = $<HTMLCanvasElement>('canvas.pool');
 if (pool) initPool(pool);
 
-initCountUp('.portal__v, .flip__v');
+initCountUp('.portal__v');
 
 // Portals: the same stages as the saga pages, cycling through a few key steps on their own.
 const stages: Record<string, StageFactory> = { kv: kvStage, dram: dramStage, flow: flowStage };
@@ -116,5 +117,24 @@ function initTerminal() {
 }
 initTerminal();
 
-// Flip stones also turn on tap (touch screens have no hover).
-document.querySelectorAll<HTMLElement>('.flip').forEach((f) => f.addEventListener('click', () => f.classList.toggle('is-flipped')));
+// Gamer tags copy themselves so people can add Arnob straight away.
+document.querySelectorAll<HTMLButtonElement>('.gamer-id').forEach((b) => {
+  b.addEventListener('click', async () => {
+    const v = b.dataset.copy ?? '';
+    let ok = false;
+    try {
+      await navigator.clipboard.writeText(v);
+      ok = true;
+    } catch {
+      // No clipboard access (e.g. plain http): select the text so it can be copied by hand.
+      const sel = getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(b.querySelector('.gamer-id__v') ?? b);
+      sel?.removeAllRanges();
+      sel?.addRange(range);
+    }
+    b.classList.add('is-copied');
+    setTimeout(() => b.classList.remove('is-copied'), 1600);
+    toast(ok ? `Copied <b>${v}</b>. See you on the battlefield.` : `Selected <b>${v}</b>. Press Ctrl+C to copy.`, 2600);
+  });
+});

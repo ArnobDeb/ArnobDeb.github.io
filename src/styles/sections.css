@@ -400,32 +400,12 @@
 .honours li { margin-bottom: 6px; }
 .honours li::marker { color: var(--gold); content: 'ᛟ  '; font-family: var(--font-rune); }
 
-/* ---------- Ravens' Post / contact ---------- */
-
-.contact {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 28px;
-  align-items: center;
-  padding: clamp(24px, 4vw, 36px);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background:
-    radial-gradient(ellipse 60% 120% at 100% 0%, rgba(138, 108, 255, .1), transparent 60%),
-    var(--bg-stone);
-}
-.contact__list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 18px 28px; list-style: none; }
-.contact__list li { display: flex; flex-direction: column; min-width: 0; }
-.contact__label { color: var(--text-dim); font-family: var(--font-mono); font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; }
-.contact__list a { overflow-wrap: anywhere; font-weight: 500; }
-@media (max-width: 720px) { .contact { grid-template-columns: 1fr; } .contact > .btn { justify-self: start; } }
-
 /* ---------- footer ---------- */
 
 .footer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   gap: 12px 24px;
   max-width: var(--maxw);
   margin: clamp(72px, 10vw, 120px) auto 0;

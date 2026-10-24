@@ -1,5 +1,5 @@
 // The world tree's trunk fills with light as you scroll down the timeline,
-// and each knot lights up as the light reaches it.
+// and each knot lights up (and grows its branch) as the light reaches it. --p drives the sap and motes.
 export function initYggdrasil(root: HTMLElement) {
   const fill = root.querySelector<HTMLElement>('.ygg__fill');
   const trunk = root.querySelector<HTMLElement>('.ygg__trunk');
@@ -13,6 +13,7 @@ export function initYggdrasil(root: HTMLElement) {
     const line = innerHeight * 0.6; // the light sits at 60% of the viewport
     const p = Math.min(1, Math.max(0, (line - r.top) / r.height));
     fill.style.transform = `scaleY(${p})`;
+    trunk.style.setProperty('--p', p.toFixed(3));
     for (const k of knots) {
       const kr = k.getBoundingClientRect();
       k.classList.toggle('is-lit', kr.top + 14 < line);

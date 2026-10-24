@@ -6,14 +6,16 @@
 - Profile photo → **none for now**; a rune seal with "AD" stands in. Add later if wanted.
 - C# and Java → **keep** (added to Languages).
 
-## Blocking before going public
-1. **GitHub Pages repo name:** `portfolio` (→ `arnobdeb.github.io/portfolio`) or `ArnobDeb.github.io` (→ `arnobdeb.github.io`)?
-2. **CSE server:** exact SSH hostname for "Mars" and the web directory (likely `~/public_html/`).
-3. **Final URL** for `meta.siteUrl` (canonical / social previews).
+## Answered (later)
+- CSE server: `25m0779@mars.cse.iitb.ac.in`, `~/public_html`, served at `cse.iitb.ac.in/~arnobdeb/` (`npm run deploy:cse`).
+- Siege: Ubisoft ID GamerBoy_21041. Anime: current favourite Kimetsu no Yaiba. Star Wars fan, Epic Games ID LordVader_19 (Battlefront).
+- Removed on request: Algo GC / Crossy GC tiles, the quote's attribution line, the footer credit line, the "smaller works" stones.
+- Timeline: education and milestones only (schooling from the old site at the roots); projects live on their own pages.
+
+## Still open
+1. **GitHub Pages repo name** (only if GitHub Pages is still wanted).
 
 ## Content (placeholders until answered)
-4. Siege: platform, Ubisoft/PSN handle, favourite operators, rank (optional). Currently shows "Send a raven for my handle".
-5. Anime: 3–6 favourites / currently watching. Currently just "Long-time anime watcher."
 6. Marvel/DC: favourite characters besides Green Lantern? Any hot takes?
 7. OK to mention practising Japanese casually through anime? (Not shown.)
 8. Keep "Qualified for the BARC OCES/DGFS-2025 selection interview"? (Shown — it's on the current site.)
