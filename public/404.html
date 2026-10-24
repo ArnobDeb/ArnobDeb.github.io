@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#07090d">
+  <title>Lost in Niflheim · Arnob Deb</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    :root { --bg: #07090d; --text: #e7ecf3; --dim: #a3afbf; --frost: #8fd3ff; --gold: #d9a441; --blood: #a3262b; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100svh; display: grid; place-items: center; padding: 24px 16px;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(143, 211, 255, .1), transparent 60%),
+                  radial-gradient(ellipse 60% 40% at 50% 110%, rgba(163, 38, 43, .18), transparent 70%), var(--bg);
+      color: var(--text); font: 17px/1.6 system-ui, -apple-system, 'Segoe UI', sans-serif; text-align: center;
+    }
+    main { max-width: 560px; }
+    .runes { color: var(--frost); letter-spacing: .5em; font-size: 1.4rem; opacity: .7; margin: 0 0 12px; }
+    h1 { font-family: Georgia, 'Times New Roman', serif; font-weight: 600; letter-spacing: .04em; font-size: clamp(2rem, 7vw, 3rem); margin: 0 0 12px; }
+    p { color: var(--dim); margin: 0 0 28px; }
+    a {
+      display: inline-block; padding: 12px 22px; border-radius: 999px; text-decoration: none; font-weight: 600;
+      background: linear-gradient(180deg, #f0c46a, var(--gold)); color: #1a1207;
+    }
+    a:focus-visible { outline: 2px solid var(--frost); outline-offset: 3px; }
+    .code { display: block; margin-top: 28px; color: var(--blood); font-family: ui-monospace, monospace; font-size: .85rem; letter-spacing: .2em; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="runes" aria-hidden="true">ᚾᛁᚠᛚᚺᛖᛁᛗ</p>
+    <h1>You have strayed into Niflheim</h1>
+    <p>Only mist and frost down this path. The page you were looking for isn't here.</p>
+    <a href="./">Return to Midgard</a>
+    <span class="code">404 · NO PATH ON YGGDRASIL</span>
+  </main>
+</body>
+</html>
