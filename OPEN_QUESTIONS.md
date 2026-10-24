@@ -19,6 +19,11 @@
 8. Keep "Qualified for the BARC OCES/DGFS-2025 selection interview"? (Shown — it's on the current site.)
 9. Any other game besides Siege?
 
+## New since the project pages
+10. The thesis page uses the Stage I report (Oct 2026), which has real results — the brief's "no results yet" is outdated. OK to publish these numbers before the Stage I evaluation is done?
+11. The thesis title is shown as "Eviction without Forgetting" (report title) with "Skylight Edge Server" as the project name. Preferred?
+12. Link the OpenVINO GenAI fork / project repo from the thesis page? (Report cites them; URLs not included yet.)
+
 ## Notes on sourcing
 - GATE AIR 103 and BARC come from the current site, not the resumes.
 - Hobbies use the resume's wording ("Pool", not "8-ball pool").

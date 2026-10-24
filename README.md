@@ -16,8 +16,12 @@ Requires Node 20+ (tested with Node 24).
 
 ## Edit the words
 
-**Everything the page says lives in [`src/content/site.ts`](src/content/site.ts)**: bio, education, thesis, projects,
-skills, resumes, off-duty section, quote, terminal lines, contact links. Edit it and save; the dev server reloads.
+**Everything the home page says lives in [`src/content/site.ts`](src/content/site.ts)**: bio, the Yggdrasil timeline,
+the Forge portals and stones, skills, resumes, Valhalla tiles, quote, terminal lines, contact links.
+**The three project pages ("sagas") live in [`src/content/sagas.ts`](src/content/sagas.ts)**: each one is a list of
+acts (scroll-driven steps beside an animated stage), chart blocks and runestone blocks. Edit and save; the dev server reloads.
+
+Pages: `index.html` (home), `restorekv.html` (thesis), `gpu.html` (RowHammer + OoO seminar), `http-server.html` (CS744).
 
 The content is rendered into static HTML at build time (`src/content/render.ts`, wired up in `vite.config.ts`),
 so the page is fully readable without JavaScript and crawlable by search engines.
@@ -40,6 +44,13 @@ The PDFs live in `public/resume/`:
 To update one, overwrite the PDF with the same file name and rebuild. To rename or add one, edit
 `resumes.items` in `site.ts` (the `file` path is relative, no leading slash).
 
+## Project pages
+
+Each act pins an animated canvas "stage" (`src/sagas/*.ts`) next to a column of steps; the step crossing the middle of the
+screen drives the stage (`src/fx/story.ts`). Charts are SVG rendered at build time from the report numbers
+(`src/content/charts.ts`) with hover/focus tooltips and a "View as table" fallback. The home page's Forge portals reuse the
+same stages, cycling through a few steps on their own.
+
 ## Effects (all in `src/fx/`)
 
 | File | What it does |
@@ -49,6 +60,10 @@ To update one, overwrite the PDF with the same file name and rebuild. To rename 
 | `lightning.ts` | Bolt + flash on the "Choose your resume" and "Send a raven" buttons |
 | `ravens.ts` | Raven flying along the top scroll-progress line |
 | `embers.ts` | A few sparks behind the thesis card |
+| `lantern.ts` / `shatter.ts` | Cursor lantern revealing runes in the hero sky; the name breaks into shards as you scroll |
+| `yggdrasil.ts` | Timeline trunk fills with light as you scroll; knots light up |
+| `pool.ts` | Playable pool table in Valhalla |
+| `story.ts` / `chartHover.ts` | Scroll-driven stages; chart tooltips and count-up stats |
 | `easterEggs.ts` | Konami code (↑↑↓↓←→←→BA) → thunder + Tony Stark quote; type `odin` → the All-father opens an eye |
 | `loop.ts` | Shared helpers: animation loops pause when off-screen or the tab is hidden |
 

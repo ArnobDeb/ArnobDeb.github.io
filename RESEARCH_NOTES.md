@@ -25,3 +25,14 @@ Bounded pass on techniques before building. Everything here was implemented from
 - **Friend's site (cse.iitb.ac.in/~sahilshahane).** Fetched as text only (no headless Chromium here), which confirmed the structure
   (hero, terminal widget, experience timeline, toolkit tags, closing CTA, Astro build) but not the motion details. Interaction design
   above follows the brief's description of what Arnob liked: stars that react to the cursor.
+
+## Second pass (project pages)
+
+- **Scrollytelling pattern**: sticky visual + stepped text, the step at mid-viewport drives the visual. Accessibility: steps are focusable and drive the stage too; reduced motion shows final states.
+  Refs: [Maglr scrollytelling roundup](https://www.maglr.com/blog/best-scrollytelling-examples), [Lovable on scroll patterns & a11y](https://lovable.dev/guides/scrolling-designs-patterns-when-to-use),
+  [Josh Comeau — scroll-driven animations](https://joshwcomeau.com/animation/scroll-driven-animations), [MDN view()](https://developer.mozilla.org/docs/Web/CSS/animation-timeline/view).
+  CSS `animation-timeline` wasn't used for the stages (they need state machines, not tweens); IntersectionObserver keeps it simple and broadly supported.
+- **IITB CSE student pages reviewed**: [Sahil Shahane](https://www.cse.iitb.ac.in/~sahilshahane/) (scramble-in name, letters that scatter on scroll, cursor spotlight, mini-games — studied, not copied),
+  [Pratham Shah](https://www.cse.iitb.ac.in/~prathamshah/), [Tejas Shinde](https://www.cse.iitb.ac.in/~tejasshinde/), [Prathamesh Yeole](https://www.cse.iitb.ac.in/~prathamy/), [Kislay](https://www.cse.iitb.ac.in/~kislay/).
+  Most present projects as bullet lists; the gap this site fills is showing *how the work works*.
+- Norse takes on those ideas: rune decode (scramble), shattering ice name (scatter), lantern revealing carved runes (spotlight), pool table (mini-game).

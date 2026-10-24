@@ -9,6 +9,10 @@ No God of War / Santa Monica Studio / Sony, Marvel, Ubisoft or DC assets, logos,
 
 The quote "Doth mother know you weareth her drapes?" is a single attributed line from *The Avengers* (2012).
 
+Project-page numbers come from Arnob's own reports (MTP Stage I, RowHammer R&D, OoO seminar) and the HTTP server repo.
+GPUHammer and the seminar's speedups are results reported by those papers and are labelled as such.
+Chart colours were checked for colour-blind separation and contrast with the dataviz palette validator.
+
 ## Fonts (self-hosted via Fontsource, SIL Open Font License 1.1)
 
 | Font | Package | License |

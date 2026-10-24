@@ -1,3 +1,5 @@
+// Shared by every page: fonts, styles, nav, reveals, mail links, raven progress,
+// rune-decode headings, lightning buttons and the easter eggs.
 import '@fontsource/cinzel/600.css';
 import '@fontsource/cinzel/700.css';
 import '@fontsource-variable/inter';
@@ -6,16 +8,15 @@ import '@fontsource/noto-sans-runic/400.css';
 import './styles/tokens.css';
 import './styles/base.css';
 import './styles/sections.css';
+import './styles/saga.css';
 
 import { initEasterEggs } from './fx/easterEggs';
-import { initEmbers } from './fx/embers';
 import { initLightning } from './fx/lightning';
 import { reducedMotion } from './fx/loop';
 import { initRavens } from './fx/ravens';
 import { initRuneDecode } from './fx/runeDecode';
-import { initSky } from './fx/starfield';
 
-const $ = <T extends Element>(sel: string) => document.querySelector<T>(sel);
+export const $ = <T extends Element>(sel: string, root: ParentNode = document) => root.querySelector<T>(sel);
 
 function initNav() {
   const nav = $<HTMLElement>('.nav');
@@ -31,9 +32,12 @@ function initNav() {
     if (e.key === 'Escape') setOpen(false);
   });
 
-  // Highlight the realm currently in view.
+  // Highlight the realm currently in view (home page only; saga pages link away).
   const links = new Map<string, HTMLAnchorElement>();
-  nav.querySelectorAll<HTMLAnchorElement>('.nav__menu a').forEach((a) => links.set(a.hash.slice(1), a));
+  nav.querySelectorAll<HTMLAnchorElement>('.nav__menu a').forEach((a) => {
+    if (a.pathname === location.pathname) links.set(a.hash.slice(1), a);
+  });
+  if (!links.size) return;
   const io = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
@@ -76,56 +80,25 @@ function initMail() {
   });
 }
 
-// Terminal in Valhalla types itself out once it scrolls into view.
-function initTerminal() {
-  const term = $<HTMLElement>('.term');
-  if (!term || reducedMotion()) return;
-  const lines = [...term.querySelectorAll<HTMLElement>('.term__line')];
-  term.classList.add('is-typing');
-  lines.forEach((l) => (l.hidden = true));
-
-  const caret = document.createElement('span');
-  caret.className = 'term__caret';
-  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-
-  const run = async () => {
-    for (const line of lines) {
-      line.hidden = false;
-      const cmd = line.querySelector<HTMLElement>('.term__cmd');
-      if (cmd) {
-        const full = line.dataset.cmd ?? '';
-        cmd.textContent = '';
-        cmd.after(caret);
-        for (const ch of full) {
-          cmd.textContent += ch;
-          await sleep(45 + Math.random() * 50);
-        }
-        await sleep(280);
-      } else {
-        await sleep(120);
-      }
-    }
-    term.querySelector('.term__body')?.append(caret);
-  };
-
-  const io = new IntersectionObserver(([e]) => {
-    if (!e.isIntersecting) return;
-    io.disconnect();
-    run();
-  }, { threshold: 0.4 });
-  io.observe(term);
+// Canvas text can't trigger web-font loading; fetch the faces the stages draw with up front.
+function preloadFonts() {
+  if (!document.fonts) return;
+  const faces: [string, string][] = [
+    ['16px "Noto Sans Runic"', 'ᚠᚢᚦᚨᚱᚲᛟ'],
+    ['600 16px Cinzel', 'Aa'],
+    ['400 16px "JetBrains Mono"', 'Aa0'],
+    ['500 16px "Inter Variable"', 'Aa0'],
+  ];
+  for (const [font, sample] of faces) document.fonts.load(font, sample).catch(() => {});
 }
 
-initNav();
-initReveal();
-initMail();
-initRavens();
-initRuneDecode();
-initLightning();
-initTerminal();
-initEasterEggs();
-
-const sky = $<HTMLCanvasElement>('.hero__sky');
-if (sky) initSky(sky);
-const embers = $<HTMLCanvasElement>('.forge__embers');
-if (embers) initEmbers(embers);
+export function initCommon() {
+  preloadFonts();
+  initNav();
+  initReveal();
+  initMail();
+  initRavens();
+  initRuneDecode();
+  initLightning();
+  initEasterEggs();
+}
