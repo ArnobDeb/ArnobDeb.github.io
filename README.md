@@ -71,14 +71,12 @@ as one static frame and all content is visible immediately.
 ## Deploy
 
 The build uses `base: './'` (relative URLs), so the same `dist/` works at `/`, at `/<repo>/` on GitHub Pages,
-and at `/~arnobdeb/` on the CSE server. **Nothing is deployed until Arnob says yes.**
+and at `/~arnobdeb/` on the CSE server. **Nothing is deployed until Arnob says yes.** Note that pushing to `main` publishes to GitHub Pages.
 
-### GitHub Pages (temporary)
-1. Arnob runs `gh auth login` himself.
-2. Create the repo (name still to be decided — see `OPEN_QUESTIONS.md`), add a Pages workflow, push.
-3. Check every link and PDF on the live URL.
-
-Before the first push, review `git ls-files` together — nothing personal may be in the repo.
+### GitHub Pages
+Live at **https://arnobdeb.github.io/** from the public repo `ArnobDeb/ArnobDeb.github.io`.
+Every push to `main` rebuilds and redeploys it (`.github/workflows/pages.yml`); watch it with `gh run watch`.
+The repo is public: nothing personal may ever be committed (see `.gitignore`).
 
 ### IITB CSE server
 ```bash

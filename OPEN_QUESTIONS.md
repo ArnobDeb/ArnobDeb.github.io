@@ -12,8 +12,10 @@
 - Removed on request: Algo GC / Crossy GC tiles, the quote's attribution line, the footer credit line, the "smaller works" stones.
 - Timeline: education and milestones only (schooling from the old site at the roots); projects live on their own pages.
 
+- GitHub Pages: `ArnobDeb/ArnobDeb.github.io` → https://arnobdeb.github.io/ (auto-deploys from `main`).
+
 ## Still open
-1. **GitHub Pages repo name** (only if GitHub Pages is still wanted).
+1. CSE server: `ssh arnobdeb@mars.cse.iitb.ac.in` was refused on port 22 from the laptop's network; find the right network/port/jump host.
 
 ## Content (placeholders until answered)
 6. Marvel/DC: favourite characters besides Green Lantern? Any hot takes?
